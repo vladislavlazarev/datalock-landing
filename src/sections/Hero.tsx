@@ -4,8 +4,7 @@ import { useRef, useCallback } from "react";
 
 const floatingShapes = [
   {
-    width: "w-64",
-    height: "h-44",
+    cls: "w-40 h-28 md:w-52 md:h-36 lg:w-64 lg:h-44",
     top: "top-[12%]",
     left: "left-[5%]",
     rotate: "rotate-[12deg]",
@@ -13,8 +12,7 @@ const floatingShapes = [
     bobDelay: "0s",
   },
   {
-    width: "w-52",
-    height: "h-36",
+    cls: "w-36 h-24 md:w-44 md:h-30 lg:w-52 lg:h-36",
     top: "top-[58%]",
     left: "left-[78%]",
     rotate: "rotate-[-8deg]",
@@ -22,8 +20,7 @@ const floatingShapes = [
     bobDelay: "-2s",
   },
   {
-    width: "w-56",
-    height: "h-40",
+    cls: "w-36 h-26 md:w-48 md:h-32 lg:w-56 lg:h-40",
     top: "top-[22%]",
     left: "left-[72%]",
     rotate: "rotate-[20deg]",
@@ -31,8 +28,7 @@ const floatingShapes = [
     bobDelay: "-4s",
   },
   {
-    width: "w-44",
-    height: "h-32",
+    cls: "w-28 h-20 md:w-36 md:h-24 lg:w-44 lg:h-32",
     top: "top-[68%]",
     left: "left-[10%]",
     rotate: "rotate-[-15deg]",
@@ -40,8 +36,7 @@ const floatingShapes = [
     bobDelay: "-6s",
   },
   {
-    width: "w-36",
-    height: "h-28",
+    cls: "hidden md:block w-32 h-24 lg:w-36 lg:h-28",
     top: "top-[8%]",
     left: "left-[44%]",
     rotate: "rotate-[6deg]",
@@ -66,7 +61,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative flex min-h-screen items-center justify-center overflow-hidden"
+      className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden px-5 py-24 md:px-6"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
@@ -89,11 +84,11 @@ export default function Hero() {
       {/* Radial glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(16,185,129,0.15)_0%,transparent_70%)]" />
 
-      {/* Floating shapes — hover: scale + glow */}
+      {/* Floating shapes */}
       {floatingShapes.map((shape, i) => (
         <div
           key={i}
-          className={`absolute ${shape.width} ${shape.height} ${shape.top} ${shape.left} ${shape.rotate} rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/[0.07] to-teal-500/[0.03] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-md transition-[transform,box-shadow] duration-500 hover:scale-110 hover:border-emerald-500/30 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_0_30px_rgba(16,185,129,0.12)] animate-[shapeIn_0.8s_ease-out_forwards,bob_12s_ease-in-out_infinite]`}
+          className={`absolute ${shape.cls} ${shape.top} ${shape.left} ${shape.rotate} rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/[0.07] to-teal-500/[0.03] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-md transition-[transform,box-shadow] duration-500 hover:scale-110 hover:border-emerald-500/30 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_0_30px_rgba(16,185,129,0.12)] animate-[shapeIn_0.8s_ease-out_forwards,bob_12s_ease-in-out_infinite]`}
           style={{
             opacity: 0,
             animationDelay: `${shape.delay}, ${shape.bobDelay}`,
@@ -102,34 +97,33 @@ export default function Hero() {
       ))}
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center px-6 text-center">
+      <div className="relative z-10 flex flex-col items-center text-center">
         {/* Badge */}
-        <p className="mb-10 text-[13px] font-medium uppercase tracking-[0.2em] text-emerald-400 opacity-0 animate-[fadeUp_0.6s_ease-out_0.2s_forwards]">
+        <p className="mb-6 text-[11px] font-medium uppercase tracking-[0.2em] text-emerald-400 opacity-0 animate-[fadeUp_0.6s_ease-out_0.2s_forwards] md:mb-10 md:text-[13px]">
           &#x25C8;&ensp;Контроль&ensp;&middot;&ensp;Аналитика&ensp;&middot;&ensp;Безопасность
         </p>
 
         {/* Headline */}
-        <h1 className="max-w-4xl text-5xl font-extrabold leading-[1.08] tracking-tight md:text-8xl">
-          <span className="block text-white opacity-0 animate-[fadeUp_0.6s_ease-out_0.4s_forwards]">
+        <h1 className="max-w-4xl text-4xl font-extrabold leading-[1.1] tracking-tight opacity-0 animate-[fadeUp_0.6s_ease-out_0.4s_forwards] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+          <span className="block text-white">
             Полный контроль.
           </span>
-          <span className="block bg-gradient-to-r from-emerald-400 via-emerald-300 to-teal-400 bg-clip-text text-transparent opacity-0 animate-[fadeUp_0.6s_ease-out_0.6s_forwards]">
+          <span className="block bg-gradient-to-r from-emerald-400 via-emerald-300 to-teal-400 bg-clip-text text-transparent">
             Абсолютная прозрачность.
           </span>
         </h1>
 
         {/* Subtitle */}
-        <p className="mt-8 max-w-2xl text-lg font-normal leading-relaxed text-[#a1a1aa] opacity-0 animate-[fadeUp_0.6s_ease-out_0.8s_forwards] md:text-xl">
+        <p className="mt-5 max-w-xl text-base font-normal leading-relaxed text-[#a1a1aa] opacity-0 animate-[fadeUp_0.6s_ease-out_0.6s_forwards] md:mt-8 md:max-w-2xl md:text-lg lg:text-xl">
           Единая платформа для мониторинга сотрудников, защиты данных
           и&nbsp;аналитики эффективности бизнеса в&nbsp;реальном времени.
         </p>
 
         {/* Buttons */}
-        <div className="mt-12 flex flex-col gap-5 opacity-0 animate-[fadeUp_0.6s_ease-out_1s_forwards] sm:flex-row">
-          {/* Animated gradient border CTA */}
+        <div className="mt-8 flex flex-col gap-4 opacity-0 animate-[fadeUp_0.6s_ease-out_0.8s_forwards] sm:flex-row sm:gap-5 md:mt-12">
           <a
             href="#demo"
-            className="cta-btn group relative inline-flex items-center justify-center gap-2 rounded-full px-10 py-4 text-base font-semibold text-white transition-shadow hover:shadow-[0_2px_36px_rgba(16,185,129,0.5)]"
+            className="cta-btn group relative inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-shadow hover:shadow-[0_2px_36px_rgba(16,185,129,0.5)] sm:px-10 sm:py-4 sm:text-base"
           >
             <span className="relative z-10 inline-flex items-center gap-2">
               Запросить демо
@@ -152,7 +146,7 @@ export default function Hero() {
           </a>
           <a
             href="#features"
-            className="inline-flex items-center justify-center rounded-full border border-neutral-700 px-10 py-4 text-base font-semibold text-neutral-300 transition-all hover:border-neutral-500 hover:text-white"
+            className="inline-flex items-center justify-center rounded-full border border-neutral-700 px-7 py-3.5 text-sm font-semibold text-neutral-300 transition-all hover:border-neutral-500 hover:text-white sm:px-10 sm:py-4 sm:text-base"
           >
             Узнать больше
           </a>

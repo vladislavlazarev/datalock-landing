@@ -1,18 +1,24 @@
-import Image from "next/image";
-
 export default function Logo({ size = 32 }: { size?: number }) {
   return (
-    <Image
-      src="/logo.png"
-      alt="DataLock"
-      width={size}
-      height={size}
-      className="object-contain"
+    <div
+      role="img"
+      aria-label="DataLock"
       style={{
-        filter: "invert(1) hue-rotate(10deg) brightness(1.3) saturate(1.6)",
-        mixBlendMode: "screen",
+        width: size,
+        height: size,
+        flexShrink: 0,
+        background: "linear-gradient(135deg, #34d399, #10B981)",
+        WebkitMaskImage: "url(/logo.png), linear-gradient(#fff 0 0)",
+        WebkitMaskSize: "contain, cover",
+        WebkitMaskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        WebkitMaskComposite: "xor",
+        maskImage: "url(/logo.png), linear-gradient(#fff 0 0)",
+        maskSize: "contain, cover",
+        maskRepeat: "no-repeat",
+        maskPosition: "center",
+        maskComposite: "exclude",
       }}
-      priority
     />
   );
 }
