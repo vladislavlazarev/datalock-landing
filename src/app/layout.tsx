@@ -16,6 +16,10 @@ export const metadata: Metadata = {
   title: "DataLock — Контроль и аналитика бизнеса",
   description:
     "Единая платформа для мониторинга сотрудников, защиты данных и аналитики эффективности.",
+  icons: {
+    icon: "/icon.png",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({
