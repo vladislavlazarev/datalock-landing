@@ -2,15 +2,16 @@
 
 import { useState, useEffect } from "react";
 import Logo from "./Logo";
+import LangSwitch from "./LangSwitch";
+import { useLocale } from "@/lib/locale-context";
+import { translations } from "@/lib/i18n";
 
-const navLinks = [
-  { label: "Возможности", href: "#features" },
-  { label: "Технологии", href: "#technology" },
-  { label: "Безопасность", href: "#security" },
-  { label: "О нас", href: "#about" },
-];
+const navKeys = ["features", "technology", "security", "about"] as const;
+const navHrefs = ["#features", "#technology", "#security", "#about"];
 
 export default function Navbar() {
+  const { locale } = useLocale();
+  const t = translations.nav;
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -43,40 +44,48 @@ export default function Navbar() {
             : "bg-transparent"
         }`}
       >
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+        <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-3">
-            <Logo size={34} />
-            <span className="text-lg font-bold tracking-tight text-white">
+          <a href="#" className="relative z-10 flex items-center gap-0">
+            <Logo size={68} />
+            <span className="-ml-3 text-lg font-bold tracking-tight text-white">
               Data<span className="text-emerald-400">Lock</span>
             </span>
           </a>
 
-          {/* Desktop nav */}
-          <div className="hidden items-center gap-8 md:flex">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href)}
-                className="text-[15px] font-medium text-white/70 transition-colors hover:text-white"
-              >
-                {link.label}
-              </a>
-            ))}
+          {/* Desktop nav — absolute center */}
+          <div className="pointer-events-none absolute inset-0 hidden items-center justify-center md:flex">
+            <div className="pointer-events-auto flex items-center gap-8">
+              {navKeys.map((key, i) => (
+                <a
+                  key={key}
+                  href={navHrefs[i]}
+                  onClick={(e) => handleLinkClick(e, navHrefs[i])}
+                  className="text-[15px] font-medium text-white/70 transition-colors hover:text-white"
+                >
+                  {t[key][locale]}
+                </a>
+              ))}
+            </div>
           </div>
 
-          {/* CTA + burger */}
-          <div className="flex items-center gap-4">
+          {/* CTA + lang + burger */}
+          <div className="relative z-10 flex items-center gap-3">
+            <div className="hidden md:flex">
+              <LangSwitch />
+            </div>
             <a
               href="#demo"
               onClick={(e) => handleLinkClick(e, "#demo")}
-              className="hidden rounded-full bg-gradient-to-b from-emerald-400 to-emerald-600 px-6 py-2.5 text-sm font-semibold text-white shadow-[0_2px_16px_rgba(16,185,129,0.3),inset_0_1px_0_rgba(255,255,255,0.15)] transition-all hover:shadow-[0_2px_24px_rgba(16,185,129,0.5)] md:inline-flex"
+              className="hidden items-center rounded-full px-6 py-2.5 text-sm font-semibold text-white md:inline-flex"
+              style={{
+                background: "linear-gradient(165deg, #34d399 0%, #059669 50%, #047857 100%)",
+                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 12px rgba(16,185,129,0.25)",
+              }}
             >
-              Запросить демо
+              {t.requestDemo[locale]}
             </a>
 
-            {/* Burger button */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="flex h-9 w-9 items-center justify-center rounded-md transition-colors hover:bg-white/10 md:hidden"
@@ -117,22 +126,29 @@ export default function Navbar() {
         }`}
       >
         <div className="flex flex-col gap-1 p-6">
-          {navLinks.map((link) => (
+          {navKeys.map((key, i) => (
             <a
-              key={link.href}
-              href={link.href}
-              onClick={(e) => handleLinkClick(e, link.href)}
+              key={key}
+              href={navHrefs[i]}
+              onClick={(e) => handleLinkClick(e, navHrefs[i])}
               className="rounded-lg px-4 py-3 text-base font-medium text-white/70 transition-colors hover:bg-white/5 hover:text-white"
             >
-              {link.label}
+              {t[key][locale]}
             </a>
           ))}
+          <div className="mt-3 flex justify-center">
+            <LangSwitch />
+          </div>
           <a
             href="#demo"
             onClick={(e) => handleLinkClick(e, "#demo")}
-            className="mt-4 rounded-full bg-gradient-to-b from-emerald-400 to-emerald-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-[0_2px_16px_rgba(16,185,129,0.3)] transition-all hover:shadow-[0_2px_24px_rgba(16,185,129,0.5)]"
+            className="mt-4 rounded-full px-5 py-3 text-center text-sm font-semibold text-white"
+            style={{
+              background: "linear-gradient(165deg, #34d399 0%, #059669 50%, #047857 100%)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 12px rgba(16,185,129,0.25)",
+            }}
           >
-            Запросить демо
+            {t.requestDemo[locale]}
           </a>
         </div>
       </div>

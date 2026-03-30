@@ -1,11 +1,11 @@
-import Logo from "./Logo";
+"use client";
 
-const navLinks = [
-  { label: "Возможности", href: "#features" },
-  { label: "Технологии", href: "#technology" },
-  { label: "Безопасность", href: "#security" },
-  { label: "О нас", href: "#about" },
-];
+import Logo from "./Logo";
+import { useLocale } from "@/lib/locale-context";
+import { translations } from "@/lib/i18n";
+
+const navKeys = ["features", "technology", "security", "about"] as const;
+const navHrefs = ["#features", "#technology", "#security", "#about"];
 
 const contacts = [
   { label: "mr.ubaydullaev@gmail.com", href: "mailto:mr.ubaydullaev@gmail.com" },
@@ -15,11 +15,14 @@ const contacts = [
 ];
 
 export default function Footer() {
+  const { locale } = useLocale();
+  const t = translations.footer;
+  const tNav = translations.nav;
+
   return (
     <footer className="border-t border-white/10 px-6 py-12">
       <div className="mx-auto max-w-6xl">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-          {/* Brand */}
           <div>
             <div className="mb-3 flex items-center gap-2.5">
               <Logo size={28} />
@@ -27,55 +30,34 @@ export default function Footer() {
                 Data<span className="text-emerald-400">Lock</span>
               </span>
             </div>
-            <p className="max-w-xs text-sm leading-relaxed text-white/40">
-              Единая система контроля и аналитики бизнеса
-            </p>
+            <p className="max-w-xs text-sm leading-relaxed text-white/40">{t.description[locale]}</p>
           </div>
 
-          {/* Navigation */}
           <div>
-            <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-white/60">
-              Навигация
-            </p>
+            <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-white/60">{t.navigation[locale]}</p>
             <ul className="flex flex-col gap-2">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-white/40 transition-colors hover:text-white"
-                  >
-                    {link.label}
-                  </a>
+              {navKeys.map((key, i) => (
+                <li key={key}>
+                  <a href={navHrefs[i]} className="text-sm text-white/40 transition-colors hover:text-white">{tNav[key][locale]}</a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contacts */}
           <div>
-            <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-white/60">
-              Контакты
-            </p>
+            <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-white/60">{t.contacts[locale]}</p>
             <ul className="flex flex-col gap-2">
               {contacts.map((c) => (
                 <li key={c.label}>
-                  <a
-                    href={c.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-white/40 transition-colors hover:text-white"
-                  >
-                    {c.label}
-                  </a>
+                  <a href={c.href} target="_blank" rel="noopener noreferrer" className="text-sm text-white/40 transition-colors hover:text-white">{c.label}</a>
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        {/* Bottom bar */}
         <div className="mt-12 border-t border-white/10 pt-6 text-center text-xs text-white/30">
-          &copy; 2025 DataLock by Perfect System Solution. Все права защищены.
+          &copy; 2026 {t.copyright[locale]}
         </div>
       </div>
     </footer>

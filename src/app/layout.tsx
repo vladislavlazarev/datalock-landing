@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { LocaleProvider } from "@/lib/locale-context";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -25,10 +26,12 @@ export default function RootLayout({
   return (
     <html lang="ru" className="scroll-smooth">
       <body className={inter.className}>
-        <ScrollProgress />
-        <Navbar />
-        {children}
-        <Footer />
+        <LocaleProvider>
+          <ScrollProgress />
+          <Navbar />
+          {children}
+          <Footer />
+        </LocaleProvider>
       </body>
     </html>
   );
